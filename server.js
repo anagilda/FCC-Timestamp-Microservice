@@ -23,6 +23,8 @@ app.get("/", function (req, res) {
 app.get("/api/timestamp/:date_string?", function (req, res) {
   
   const date_string = req.params.date_string;
+  
+  const reg = RegExp(/^[0-9]*.?[0-9]+$/);
 
   // Values in case of invalid date_string
   let unix = null;
@@ -34,10 +36,7 @@ app.get("/api/timestamp/:date_string?", function (req, res) {
     utc  = new Date(unix).toUTCString();
     
   // If data_string is a number
-    // or if we wanted non-decimal:
-    // const reg = RegExp(/^[0-9]*$/);
-    // if (date_string.match(reg))
-  } else if(typeof(data_string) === "number"){
+  } else if(date_string.match(reg)){
     unix = parseInt(date_string);
     utc  = new Date(unix).toUTCString();
     
