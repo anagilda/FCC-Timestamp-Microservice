@@ -19,9 +19,35 @@ app.get("/", function (req, res) {
 });
 
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+// API endpoint
+app.get("/api/timestamp/:date_string?", function (req, res) {
+  
+  const date_string = req.params.date_string;
+
+  // Values in case of invalid date_string
+  let unix = null;
+  let utc = 'Invalid Date';
+  
+  // If data_string is empty
+  if(!date_string) {
+    unix = Date.now();
+    utc  = new Date(unix).toUTCString();
+    
+  // If data_string is a number
+    // or if we wanted non-decimal:
+    // const reg = RegExp(/^[0-9]*$/);
+    // if (date_string.match(reg))
+  } else if(typeof(data_string) === "number"){
+    unix = parseInt(date_string);
+    utc  = new Date(unix).toUTCString();
+    
+  // If none of the above, but data_string can still be parsed by new Date()
+  } else if (Date(date_string)) {
+    utc  = new Date(date_string).toUTCString();
+    unix = Date.parse(utc);
+  }
+
+  res.json({ unix , utc });
 });
 
 
