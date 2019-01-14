@@ -26,7 +26,7 @@ app.get("/api/timestamp/:date_string?", function (req, res) {
 
   // Values in case of invalid date_string
   let unix = null;
-  let utc = 'Invalid Date';
+  let utc  = 'Invalid Date';
   
   // If data_string is empty
   if(!date_string) {
